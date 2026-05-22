@@ -1,4 +1,36 @@
 let submit_btn = document.querySelector("input[type='submit']");
+let traitArr;
+let mappedTraitArr = [];
+
+/**
+ * Get traits from traits.csv
+ */
+function getAllTraits(){
+    Papa.parse("traits.csv", {
+        header:true,
+        download:true,
+        complete:function(results, file){
+            console.log("parsing complete", results.data);
+            traitArr = results.data;
+
+            i = 0
+            traitArr.forEach(element => {
+                stringName = element.name + ", " + element.rarity + ", " + element.category + ", " + element.subspecies + ", " + element.variant;
+                mappedTraitArr.push({id: i, text:stringName});
+                i++
+            });
+            //console.log(mappedTraitArr);
+            $(document).ready(function() {
+                $('.traits').select2({
+                    data:mappedTraitArr
+                });
+            });
+        }
+    })
+}
+
+getAllTraits();
+
 
 /* RARITY TABLE 
     - 0 = common, 1 = uncommon, 2 = rare, 3 = legendary
@@ -41,13 +73,13 @@ let subspeciesA1;
 let subspeciesB1;
 let subspeciesC1; // ignore for now
 let variant1;
-let traits1;
+let traits1 = [];
 
 let subspeciesA2;
 let subspeciesB2;
 let subspeciesC2; // ignore for now
 let variant2;
-let traits2;
+let traits2 = [];
 
 // kit object
 function Kit(subA, subB, vari, trai){
@@ -69,16 +101,32 @@ function getData(e){
     subspeciesA1 = document.querySelector("#subspeciesA1").value.trim();
     subspeciesB1 = document.querySelector("#subspeciesB1").value.trim();
     variant1 = document.querySelector("#variant1").value.trim();
-    traits1 = document.querySelector("#traits1").value.trim();
+    tempTraits1 = $('#traits1').select2('data');
+
+    // add traits to array of objects (that will correspond ids with traitArr)
+    console.log("***traits1***");
+    tempTraits1.forEach(element => {
+        console.log(element.id +", "+ element.text);
+        traits1.push({id:element.id, text:element.text});
+    });
+    console.log(traits1);
 
     // get parent 2 data
     subspeciesA2 = document.querySelector("#subspeciesA2").value.trim();
     subspeciesB2 = document.querySelector("#subspeciesB2").value.trim();
     variant2 = document.querySelector("#variant2").value.trim();
-    traits2 = document.querySelector("#traits2").value.trim();
+    tempTraits2 = $('#traits2').select2('data');
+
+    // add traits to array of objects (that will correspond ids with traitArr)
+    console.log("***traits2***");
+    tempTraits2.forEach(element => {
+        console.log(element.id +", "+ element.text);
+        traits2.push({id:element.id, text:element.text});
+    });
+    console.log(traits2);
 
     //output
-    text += "Parent 1 <br> Is Special NPC: "+ special1 + "<br> Subspecies: " + subspeciesA1 + ", " + subspeciesB1+ "<br>Variant: " + variant1 + "<br>Traits: " + traits1 + "<br>Parent 2 <br>" + "Subspecies: " + subspeciesA2 + ", " + subspeciesB2+ "<br>Variant: " + variant2 + "<br>Traits: " + traits2;
+    text += "<strong>Parent 1</strong><br>Is Special NPC: "+ special1 + "<br>Subspecies: " + subspeciesA1 + ", " + subspeciesB1+ "<br>Variant: " + variant1 + "<br>Traits: " + traits1 + "<br><strong>Parent 2</strong><br>" + "Subspecies: " + subspeciesA2 + ", " + subspeciesB2+ "<br>Variant: " + variant2 + "<br>Traits: " + traits2;
     document.querySelector("#formOutput").innerHTML = text;
 
     // start breeding!
@@ -95,8 +143,8 @@ function randomNum100(){
 
 /**
  * return the rarity of a given subspecies as string
- * @param {*} subspecies 
- * @returns 
+ * @param {string} subspecies 
+ * @returns string
  */
 function subspeciesRarityStr(subspecies){
     common =    "fire water nature";
@@ -122,6 +170,9 @@ function subspeciesRarityStr(subspecies){
 
 /**
  * pick a subspecies based on the rarity table
+ * @param {string} sub1
+ * @param {string} sub2 
+ * @returns string
  */
 function pickSubspecies(sub1, sub2){
     console.log("**picking subspecies***");
@@ -156,8 +207,8 @@ function pickSubspecies(sub1, sub2){
 
 /**
  * decide the rarity of a hybrid by selecting the highest rarity
- * @param {*} sub1 
- * @param {*} sub2 
+ * @param {string} sub1 
+ * @param {string} sub2 
  */
 function hybridRarity(sub1, sub2){
     console.log("***picking highest rarity between "+sub1+" and "+sub2+"***")
@@ -178,7 +229,10 @@ function hybridRarity(sub1, sub2){
     }
 }
 
-
+/**
+ * calculate the number of eggs
+ * @returns 
+ */
 function eggNum(){
     console.log("******************\nEGG\n******************");
     console.log("special p1?: " + special1);
@@ -218,6 +272,10 @@ function eggNum(){
     }
 }
 
+/**
+ * calculate the subspecies of a kit based on the parents
+ * @returns string
+ */
 function subspeciesCalc(){
     var hybrid1 = !(!subspeciesB1 || subspeciesB1.length===0);
     var hybrid2 = !(!subspeciesB2 || subspeciesB2.length===0);
@@ -407,7 +465,10 @@ function subspeciesCalc(){
         }
         console.log("kit hybrid?: "+ isHybrid);
     }
+
+    return subspeciesResult;
 }
+
 
 
 function calcBreeding(){
