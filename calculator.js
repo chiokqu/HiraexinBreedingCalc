@@ -119,8 +119,8 @@ function getData(e){
     // get parent 1 data
     var text = "";
     special1 = document.querySelector("#special1").checked;
-    subspeciesA1 = document.querySelector("#subspeciesA1").value.trim();
-    subspeciesB1 = document.querySelector("#subspeciesB1").value.trim();
+    subspeciesA1 = document.querySelector("#subspeciesA1").value.trim().toLowerCase();
+    subspeciesB1 = document.querySelector("#subspeciesB1").value.trim().toLowerCase();
     variant1 = document.querySelector("#variant1").value.trim();
     tempTraits1 = $('#traits1').select2('data');
 
@@ -133,8 +133,8 @@ function getData(e){
     console.log(traits1);
 
     // get parent 2 data
-    subspeciesA2 = document.querySelector("#subspeciesA2").value.trim();
-    subspeciesB2 = document.querySelector("#subspeciesB2").value.trim();
+    subspeciesA2 = document.querySelector("#subspeciesA2").value.trim().toLowerCase();
+    subspeciesB2 = document.querySelector("#subspeciesB2").value.trim().toLowerCase();
     variant2 = document.querySelector("#variant2").value.trim();
     tempTraits2 = $('#traits2').select2('data');
 
@@ -304,13 +304,16 @@ function eggNum(){
 function subspeciesCalc(){
     /** VARIABLES
      * hybrid1/hybrid2: is parent 1/2 a hybrid - boolean
+     * void1/void2: is parent 1/2 void - boolean
      * roll: random number (1-100) - int
      * isHybrid: is child a hybrid - boolean
      * subspeciesResult: string of 1 subspecies or 2 delimited by "," NO SPACE!
      */
     var hybrid1 = !(!subspeciesB1 || subspeciesB1.length===0);
     var hybrid2 = !(!subspeciesB2 || subspeciesB2.length===0);
-    var roll = randomNum100();
+    var void1 = subspeciesA1==="void" || subspeciesB1==="void";
+    var void2 = subspeciesA2==="void" || subspeciesB2==="void";
+    var roll = 1 //randomNum100();
     var isHybrid;
     var subspeciesResult = "";
 
@@ -334,7 +337,14 @@ function subspeciesCalc(){
 
             // if subspecies are same, set to the one!
             if (subspeciesA1 === subspeciesA2){
+                isHybrid = false;
                 subspeciesResult = subspeciesA1;
+            }
+            // prevent voids from being hybridised
+            if (void1 || void2){
+                // choose 1 subspecies from either parent
+                isHybrid = false;
+                subspeciesResult = pickSubspecies(subspeciesA1, subspeciesA2);
             }
             console.log("subspeciesResult: " + subspeciesResult);
         }
@@ -350,7 +360,8 @@ function subspeciesCalc(){
     // two hybrid parents
     else if (hybrid1 && hybrid2){
         console.log("two hybrid parents - hybrid roll");
-        if (roll <= TWO_HYBRID){
+        // prevent void from being hybrids
+        if (roll <= TWO_HYBRID && (!void1 && !void2)){
             isHybrid = true;
 
             // if both parents are same hybrid
@@ -419,6 +430,84 @@ function subspeciesCalc(){
                 }
             }
         }
+        // if both parent(s) are void:
+        else if (void1 && void2){
+            // just pass ONLY void
+            isHybrid = false;
+            console.log("both parents void - pass only void");
+            subspeciesResult = "void";
+            console.log("subspeciesResult: " + subspeciesResult);
+        }
+        // if parent 1 is void
+        else if (void1){
+            // treat as if parent 1 only has non void subspecies
+            if (subspeciesA1==="void"){
+                isHybrid = true;
+                // pick between p2 subspecies
+                pick = pickSubspecies(subspeciesA2, subspeciesB2);
+                // make hybrid of non void and pick
+                subspeciesResult = subspeciesB1 + "," + pick;
+
+                // check if second subspecies equal to either of p2
+                if (subspeciesB1===subspeciesA2||subspeciesB1==subspeciesB2){
+                    // copy p2 hybrid
+                    console.log("parents share subspecies - copy hybrid parent");
+                    subspeciesResult = subspeciesA2 + "," + subspeciesB2;
+                }
+                console.log("subspeciesResult: " + subspeciesResult);
+            }
+            // subspecies B1 is void
+            else{
+                isHybrid = true;
+                // pick between p2 subspecies
+                pick = pickSubspecies(subspeciesA2, subspeciesB2);
+                // make hybrid of non void and pick
+                subspeciesResult = subspeciesA1 + "," + pick;
+
+                // check if second subspecies equal to either of p2
+                if (subspeciesA1===subspeciesA2||subspeciesA1==subspeciesB2){
+                    // copy p2 hybrid
+                    console.log("parents share subspecies - copy hybrid parent");
+                    subspeciesResult = subspeciesA2 + "," + subspeciesB2;
+                }
+                console.log("subspeciesResult: " + subspeciesResult);
+            }
+        }
+        // if parent 2 is void
+        else if (void2){
+            // treat as if parent 2 only has non void subspecies
+            if (subspeciesA2==="void"){
+                isHybrid = true;
+                // pick between p1 subspecies
+                pick = pickSubspecies(subspeciesA1, subspeciesB1);
+                // make hybrid of non void and pick
+                subspeciesResult = subspeciesB2 + "," + pick;
+
+                // check if second subspecies equal to either of p1
+                if (subspeciesB2===subspeciesA1||subspeciesB2==subspeciesB1){
+                    // copy p1 hybrid
+                    console.log("parents share subspecies - copy hybrid parent");
+                    subspeciesResult = subspeciesA1 + "," + subspeciesB1;
+                }
+                console.log("subspeciesResult: " + subspeciesResult);
+            }
+            // subspecies B2 is void
+            else{
+                isHybrid = true;
+                // pick between p1 subspecies
+                pick = pickSubspecies(subspeciesA1, subspeciesB1);
+                // make hybrid of non void and pick
+                subspeciesResult = subspeciesA2 + "," + pick;
+
+                // check if second subspecies equal to either of p1
+                if (subspeciesA2===subspeciesA1||subspeciesA2==subspeciesB1){
+                    // copy p1 hybrid
+                    console.log("parents share subspecies - copy hybrid parent");
+                    subspeciesResult = subspeciesA1 + "," + subspeciesB1;
+                }
+                console.log("subspeciesResult: " + subspeciesResult);
+            }
+        }
         else{
             isHybrid = false;
             // roll for both parents and pick from rolls
@@ -433,7 +522,8 @@ function subspeciesCalc(){
     // one hybrid parent
     else{
         console.log("one hybrid parent - hybrid roll");
-        if (roll <= ONE_HYBRID){
+        // prevent void from being hybrids
+        if (roll <= ONE_HYBRID && (!void1 && !void2)){
             isHybrid = true;
 
             var secondRoll = randomNum100();
@@ -473,6 +563,87 @@ function subspeciesCalc(){
                         subspeciesResult =  pickSubspecies(subspeciesA2, subspeciesB2) + "," + subspeciesA1;
                     }
                 }
+                console.log("subspeciesResult: " + subspeciesResult);
+            }
+        }
+
+        // if both parent(s) are void:
+        else if (void1 && void2){
+            // just pass ONLY void
+            isHybrid = false;
+            console.log("both parents void - pass only void");
+            subspeciesResult = "void";
+            console.log("subspeciesResult: " + subspeciesResult);
+        }
+        // if parent 1 void
+        else if (void1){
+            // if parent 1 is void hybrid
+            if (hybrid1){
+                console.log("parent 1 is void hybrid")
+                // pick either void or non void trait
+                pick1 = pickSubspecies(subspeciesA1, subspeciesB1);
+                if (pick1==="void"){
+                    // just pass ONLY void
+                    console.log("random pick void - pass void only")
+                    isHybrid = false;
+                    subspeciesResult = "void";
+                    console.log("subspeciesResult: " + subspeciesResult);
+                }
+                else{
+                    // combine non void trait and non hybrid parent
+                    console.log("combine p1 other trait and p2 trait")
+                    isHybrid = true;
+                    subspeciesResult = pick1 + "," + subspeciesA2;
+                    // if subspecies are same, set to the one!
+                    if (pick1 === subspeciesA2){
+                        isHybrid = false;
+                        subspeciesResult = pick1;
+                    }
+                    console.log("subspeciesResult: " + subspeciesResult);
+                }
+            }
+            // parent 1 is not void hybrid 
+            else{
+                console.log("parent 1 is NOT hybrid")
+                // copy non void parent
+                isHybrid = true;
+                subspeciesResult = subspeciesA2 + "," + subspeciesB2;
+                console.log("subspeciesResult: " + subspeciesResult);
+            }
+        }
+        // if parent 2 void
+        else if (void2){
+            // if parent 2 is void hybrid
+            if (hybrid2){
+                console.log("parent 2 is void hybrid")
+                // pick either void or non void trait
+                pick2 = pickSubspecies(subspeciesA2, subspeciesB2);
+                if (pick2==="void"){
+                    // just pass ONLY void
+                    console.log("random pick void - pass void only")
+                    isHybrid = false;
+                    subspeciesResult = "void";
+                    console.log("subspeciesResult: " + subspeciesResult);
+                }
+                else{
+                    // combine non void trait and non hybrid parent
+                    console.log("combine p2 other trait and p1 trait")
+                    isHybrid = true;
+                    subspeciesResult = pick2 + "," + subspeciesA1;
+                    // if subspecies are same, set to the one!
+                    if (pick2 === subspeciesA1){
+                        isHybrid = false;
+                        subspeciesResult = pick2;
+                    }
+                    console.log("subspeciesResult: " + subspeciesResult);
+                }
+            }
+            // parent 2 is not void hybrid 
+            else{
+                console.log("parent 2 is NOT hybrid")
+                // copy non void parent
+                isHybrid = true;
+                subspeciesResult = subspeciesA1 + "," + subspeciesB1;
                 console.log("subspeciesResult: " + subspeciesResult);
             }
         }
