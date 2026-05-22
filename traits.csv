@@ -1,0 +1,186 @@
+name, rarity, category, subspecies, variant
+smooth horns, common, horns, universal
+rough horns, uncommon, horns, universal
+twisted horns, rare, horns, universal
+branched horns, legendary, horns, universal
+abnormal horn number, mutation, horns, universal
+different horn sets, mutation, horns, universal
+orb-like horn, mutation, horns, universal
+slit pupil, common, eyes, universal
+round pupil, uncommon, eyes, universal
+no pupil, rare, eyes, universal
+complete heterochromia, rare, eyes, universal
+central heterochromia, rare, eyes, universal
+sectoral heterochromia, rare, eyes, universal
+other pupil shape, legendary, eyes, universal
+coloured pupil, mutation, eyes, universal
+other sclera colour, mutation, eyes, universal
+polycoria, mutation, eyes, universal
+round ribbon, common, ribbons, universal
+flat ribbon, common, ribbons, universal
+pompom ribbon, uncommon, ribbons, universal
+plaited ribbon, rare, ribbons, universal
+lace ribbon, legendary, ribbons, universal
+split ribbon, mutation, ribbons, universal
+branched ribbon, mutation, ribbons, universal
+shaped ribbon orbs, mutation, ribbons, universal
+different wing number, mutation, wings, universal
+different wing types, mutation, wings, universal
+non-subspecies wings, mutation, wings, universal
+overgrown canines, mutation, other, universal
+extra limbs, mutation, body, universal
+overgrown fur, mutation, body, universal
+decay, mythical, event, universal
+bone growth, mythical, event, universal
+pierced wound, mythical, event, universal
+corrupted scars, mythical, event, universal
+corruption ribbons, mythical, event, universal
+glowing heart, mythical, event, universal
+soulfire eyes, mythical, event, universal
+radioactive core, mythical, special mutation, temporal, future
+goo body parts, mythical, special mutation, temporal, future
+radioactive bones, mythical, special mutation, temporal, future
+radioactive bone growth, mythical, special mutation, temporal, future
+goo tears, mythical, special mutation, temporal, future
+goo venom, mythical, special mutation, temporal, future
+candelabra antlers, mythical, horns, universal
+fairy light ribbons, mythical, ribbons, universal
+snowglobe body parts, mythical, body, universal
+lucky knot ribbons, mythical, ribbons, universal
+huadian central eye, mythical, eyes, universal	
+soul pearl, mythical, other, universal
+soulfire trail, mythical, other, universal
+multiple tails, mythical, other, universal
+fox ears, mythical, other, universal
+broken horn, mythical, event, temporal, future
+broken mechanical parts, mythical, event, temporal, future
+broken tubes, mythical, event, temporal, future
+insect wings, N/A, wings, nature
+bird wings, N/A, wings, nature
+leaf tail growth, common, tail growth, nature
+flower tail growth, uncommon, tail growth, nature
+succulent tail growth, rare, tail growth, nature
+fungus tail growth, legendary, tail growth, nature
+fruit/vegetable/seed tail growth, mutation, tail growth, nature
+air plant tail tip, mutation, subspecies mutation, nature
+hooves, N/A, body, nature
+mandibles, N/A, other, nature
+proboscis, N/A, other, nature
+antennae, N/A, other, nature
+plant growth, mutation, subspecies mutation, nature
+wooden body parts, mutation, subspecies mutation, nature
+partially scaled, N/A, body, water
+dorsal fin, N/A, other, water
+back fin legs, mutation, subspecies mutation, water
+translucent body parts, mutation, subspecies mutation, water
+extra/multiple orbs, mutation, subspecies mutation, water
+eel/axolotl tail, mutation, subspecies mutation, water
+jellyfish tail, mutation, subspecies mutation, water
+external gills (tropic), N/A, other, water, tropic
+fully scaled (tropic), mutation, subspecies mutation, water, tropic
+bioluminescent markings (tropic), mutation, subspecies mutation, water, tropic
+fully scaled (ocean), N/A, body, water, ocean
+bioluminescent markings (ocean), N/A, body, water, ocean
+flame covered paws, N/A, body, fire
+fire/smoke trails, N/A, other, fire
+fire breath, N/A, other, fire
+phoenix wings, mutation, subspecies mutation, fire
+fire limbs, mutation, subspecies mutation, fire
+lava body parts, mutation, subspecies mutation, fire
+no pupil, common, eyes, crystal
+no eyes, uncommon, eyes, crystal
+gem eyes, rare, eyes, crystal
+crystalline wing membrane, N/A, wings, crystal
+metal tail growth, common, tail growth, crystal
+gem tail growth, uncommon, tail growth, crystal
+whisker-like ribbons, N/A, ribbons, crystal
+minerals in mane, N/A, mane, crystal
+metal spine spikes, common, other, crystal
+crystal growth, N/A, other, crystal
+gem horns/claws, mutation, subspecies mutation, crystal
+metal body parts, mutation, subspecies mutation, crystal
+gem body parts, mutation, subspecies mutation, crystal
+magic crystal, mutation, subspecies mutation, crystal
+ice horns/claws, mutation, subspecies mutation, frost
+ice body parts, mutation, subspecies mutation, frost
+icicle body growth, mutation, subspecies mutation, frost
+storm cloud tail growth, common, tail growth, thunder
+lightning bolt tail growth, uncommon, tail growth, thunder
+lightning rod tail growth, rare, tail growth, thunder
+wire ribbon, N/A, ribbons, thunder
+light-bulb orbs, N/A, ribbons, thunder
+thundercloud mane, N/A, mane, thunder
+nose scales, N/A, other, thunder
+chin/cheek spikes, N/A, other, thunder
+lightning rod quills, N/A, other, thunder
+thundercloud wings, mutation, subspecies mutation, thunder
+plasma body parts, mutation, subspecies mutation, thunder
+magic sensing central eye, N/A, eyes, celestial	
+double head wings, N/A, wings, celestial
+feathers in mane, N/A, mane, celestial
+long body (celestial-born), N/A, body, celestial
+extra back wings, common, wings, celestial
+extra paw wings, uncommon, wings, celestial
+extra tail wings, rare, wings, celestial
+eye halo, mutation, subspecies mutation, celestial
+eyes on halo, mutation, subspecies mutation, celestial
+wings on halo, mutation, subspecies mutation, celestial
+magic head ribbon, mutation, subspecies mutation, celestial
+floating eyes (celestial-born), mutation, subspecies mutation, celestial
+metallic horn/claws, mutation, horns, star
+floating wing, N/A, wings, star
+nebula cloud tail growth, common, tail growth, star
+planet/star tail growth, uncommon, tail growth, star
+comet trail tail growth, rare, tail growth, star
+nebula cloud ribbon trail, N/A, ribbons, star
+nebula mane (star-born), N/A, mane, star
+long body (star-born), N/A, body, star
+floating constellations, N/A, other, star
+planet between horns, N/A, other, star
+asteroid belt around limbs, N/A, other, star
+orbiting space object, mutation, subspecies mutation, star
+nebula fur, mutation, subspecies mutation, star
+planet ring halo, mutation, subspecies mutation, star
+nebula wing membrane, mutation, subspecies mutation, star
+nebula eyes, mutation, subspecies mutation, star
+tail ribbon orbs, mutation, subspecies mutation, star
+nebula eyes and tears, N/A, eyes, star, starstruck
+corrupted wings, N/A, wings, star, starstruck
+belly scales, N/A, body, star, starstruck
+nebula spine fur, N/A, body, star, starstruck
+black hole between horns, N/A, other, star, starstruck
+multiple eyes, N/A, eyes, void
+corruption sensing central eye, N/A, eyes, void
+bird-like front talons, N/A, body, void
+floating void limbs, N/A, body, void
+shorter body, N/A, body, void
+corruption limbs, N/A, body, void
+void tears, N/A, other, void
+corrupted halo, N/A, other, void
+multiple mouths, N/A, other, void
+corrupted bite, N/A, other, void
+floating eyes (void-born), mutation, subspecies mutation, void
+floating mouths, mutation, subspecies mutation, void
+mechanical tail attachment, N/A, tail growth, temporal	
+mechanical body parts, N/A, body, temporal
+clock implant/accessory, N/A, other, temporal
+any non-magic/elemental trait from other subspecies, N/A, other, temporal
+elemental trait from other subspecies, mutation, subspecies mutation, temporal
+orbs on ribbons, mutation, subspecies mutation, temporal
+glass horns, N/A, horns, temporal, future
+artificial wings, N/A, wings, temporal, future
+bionic body parts, N/A, body, temporal, future
+feathered draconic wing, mutation, wings, hybrid
+crystal plant tail growth, N/A, tail growth, hybrid, nature/crystal
+floating crystals, mutation, other, hybrid, crystal/star
+aquatic plant growth, mutation, subspecies mutation, hybrid, nature/water
+plant halo, mutation, subspecies mutation, hybrid, nature/celestial
+glowing plants, mutation, subspecies mutation, hybrid, nature/star
+water halo, mutation, subspecies mutation, hybrid, water/celestial
+nebula water, mutation, subspecies mutation, hybrid, water/star
+fire halo, mutation, subspecies mutation, hybrid, fire/celestial
+crystal halo, mutation, subspecies mutation, hybrid, crystal/celestial
+ice halo, mutation, subspecies mutation, hybrid, frost/celestial
+nebula corruption, mutation, subspecies mutation, hybrid, star/void
+nebula insect wings, mutation, subspecies mutation, hybrid, nature/star
+nebula fins, mutation, subspecies mutation, hybrid, water/star

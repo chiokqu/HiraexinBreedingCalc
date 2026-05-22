@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiraexin Breeding Calculator</title>
+    <script type="text/javascript" src="calculator.js" defer></script>
+</head>
+<body>
+    <h1>Hiraexin Breeding Calculator</h1>
+    <p>Info: Don't add ribbon number. If not hybrid, only put subspecies in first box!</p>
+    <form action="" name="parentsform" id="parentsform">
+        <h2>Parent 1:</h2>
+        <p>
+            <label for="">Is Special NPC?</label>
+            <input type="checkbox" id="special1">
+        </p>
+        <p>
+            <label for="subspeciesA1">Subspecies</label>
+            <select name="subspeciesA1" id="subspeciesA1">
+                <option value="Fire">Fire</option>
+                <option value="Water">Water</option>
+                <option value="Nature">Nature</option>
+                <option value="Thunder">Thunder</option>
+                <option value="Crystal">Crystal</option>
+                <option value="Frost">Frost</option>
+                <option value="Celestial">Celestial</option>
+                <option value="Star">Star</option>
+                <option value="Void">Void</option>
+                <option value="Temporal">Temporal</option>
+            </select>
+            <select name="subspeciesB1" id="subspeciesB1">
+                <option value=""></option>
+                <option value="Fire">Fire</option>
+                <option value="Water">Water</option>
+                <option value="Nature">Nature</option>
+                <option value="Thunder">Thunder</option>
+                <option value="Crystal">Crystal</option>
+                <option value="Frost">Frost</option>
+                <option value="Celestial">Celestial</option>
+                <option value="Star">Star</option>
+                <option value="Void">Void</option>
+                <option value="Temporal">Temporal</option>
+            </select>
+        </p>
+        <p>
+            <label for="variant1">Variant (blank if none)</label>
+            <input type="text" id="variant1">
+        </p>
+        <p>
+            <label for="traits1">Traits (separate with comma - don't add rarity)</label>
+            <textarea name="traits1" id="traits1"></textarea>
+        </p>
+        <hr>
+        <h2>Parent 2:</h2>
+        <p>
+            <label for="subspeciesA2">Subspecies</label>
+            <select name="subspeciesA2" id="subspeciesA2">
+                <option value="Fire">Fire</option>
+                <option value="Water">Water</option>
+                <option value="Nature">Nature</option>
+                <option value="Thunder">Thunder</option>
+                <option value="Crystal">Crystal</option>
+                <option value="Frost">Frost</option>
+                <option value="Celestial">Celestial</option>
+                <option value="Star">Star</option>
+                <option value="Void">Void</option>
+                <option value="Temporal">Temporal</option>
+            </select>
+            <select name="subspeciesB2" id="subspeciesB2">
+                <option value=""></option>
+                <option value="Fire">Fire</option>
+                <option value="Water">Water</option>
+                <option value="Nature">Nature</option>
+                <option value="Thunder">Thunder</option>
+                <option value="Crystal">Crystal</option>
+                <option value="Frost">Frost</option>
+                <option value="Celestial">Celestial</option>
+                <option value="Star">Star</option>
+                <option value="Void">Void</option>
+                <option value="Temporal">Temporal</option>
+            </select>
+        </p>
+        <p>
+            <label for="variant2">Variant (blank if none)</label>
+            <input type="text" id="variant2">
+        </p>
+        <p>
+            <label for="traits2">Traits (separate with comma - don't add rarity)</label>
+            <textarea name="traits2" id="traits2"></textarea>
+        </p>
+        <p>
+            <input type="submit">
+        </p>
+    </form>
+    <hr>
+    <p id="formOutput">form output</p>
+    <p id="eggNum">eggs</p>
+    <p id="kit1">kit1</p>
+
+</body>
+</html>
