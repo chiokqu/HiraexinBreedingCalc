@@ -313,7 +313,7 @@ function subspeciesCalc(){
     var hybrid2 = !(!subspeciesB2 || subspeciesB2.length===0);
     var void1 = subspeciesA1==="void" || subspeciesB1==="void";
     var void2 = subspeciesA2==="void" || subspeciesB2==="void";
-    var roll = 1 //randomNum100();
+    var roll = randomNum100();
     var isHybrid;
     var subspeciesResult = "";
 
@@ -669,6 +669,130 @@ function subspeciesCalc(){
     return subspeciesResult;
 }
 
+/**
+ * pick a trait based on the rarity table
+ * takes traitArr objects
+ * @param {object} trait1 
+ * @param {object} trait2 
+ * @returns object (trait)
+ */
+function pickTrait(trait1, trait2){
+    console.log("***picking trait: "+ trait1.name + " v " + trait2.name +"***");
+    var roll = randomNum100();
+    var rate;
+    var picked; // trait object picked
+
+    // get chance of first trait chosen
+    console.log("indexing at: " + trait1.rarity + " v " + trait2.rarity);
+    rate = rarityTable[trait1.rarity][trait2.rarity];
+    console.log("rate: " + rate + ", roll: " + roll);
+
+    // pick subspecies based on roll
+    if (roll <= rate){
+        console.log("picked: " + trait1.name);
+        picked = trait1;
+    }
+    else{
+        console.log("picked: " + trait2.name);
+        picked = trait2;
+    }
+
+    return picked;
+}
+
+/**
+ * pick eye traits based on parent
+ */
+function pickEyes(){
+    var standard = "common uncommon rare legendary"
+    var p1pupil;
+    var p1het;
+    var p2pupil;
+    var p2het;
+    var pickPupil;
+    var pickHet;
+    // find standard eye traits for p1
+    traits1.forEach(trait => {
+        if (standard.includes(traitArr[trait.id].rarity)){
+            // is pupil trait?
+            if (traitArr[trait.id].name.includes("pupil")){
+                p1pupil = traitArr[trait.id];
+            }
+            // is heterchromia trait?
+            if (traitArr[trait.id].name.includes("heterochromia")){
+                p1het = traitArr[trait.id];
+            }
+        }
+    });
+    // find standard eye traits for p2
+    traits2.forEach(trait => {
+        if (standard.includes(traitArr[trait.id].rarity)){
+            // is pupil trait?
+            if (traitArr[trait.id].name.includes("pupil")){
+                p2pupil = traitArr[trait.id];
+            }
+            // is heterchromia trait?
+            if (traitArr[trait.id].name.includes("heterochromia")){
+                p2het = traitArr[trait.id];
+            }
+        }
+    });
+    // compare pupils
+    console.log("***compare pupil:***");
+    //if neither trait exists
+    if (!p1pupil && !p2pupil){
+        console.log("neither exists");
+        pickPupil = undefined;
+    }
+    // if traits are the same
+    else if (p1pupil.name===p2pupil.name){
+        console.log("same trait");
+        pickPupil = p1pupil;
+    }
+    // if p1 trait doesn't exist
+    else if (!p1pupil){
+        console.log("no p1 trait");
+        pickPupil = p2pupil;
+    }
+    // if p2 trait doesn't exist
+    else if (!p2pupil){
+        console.log("no p2 trait");
+        pickPupil = p1pupil;
+    }
+    else{
+        // otherwise pick based on table
+        pickPupil = pickTrait(p1pupil, p2pupil);
+    }
+    // compare heterochromia
+    console.log("***compare heterochromia***");
+    //if neither trait exists
+    if (!p1het && !p2het){
+        console.log("neither exists");
+        pickHet = undefined;
+    }
+    // if traits are the same
+    else if (p1het.name===p2het.name){
+        console.log("same trait");
+        pickHet = p1het;
+    }
+    // if p1 trait doesn't exist
+    else if (!p1het){
+        console.log("no p1 trait");
+        pickHet = p2het;
+    }
+    // if p2 trait doesn't exist
+    else if (!p2het){
+        console.log("no p2 trait");
+        pickHet = p1het;
+    }
+    else{
+        // otherwise pick based on table
+        pickHet = pickTrait(p1het, p2het);
+    }
+    console.log("result: " + pickPupil + ", " + pickHet);
+    return [pickPupil, pickHet];
+}
+
 /**************************
  * BREEDING CALCULATION
 ***************************/
@@ -679,6 +803,17 @@ function calcBreeding(){
 
     // this will be looped per kit 
     kitSubspecies = subspeciesCalc();
+    console.log("KIT SUBSPECIES:"+kitSubspecies);
+    kitEyes = [];
+    kitEyes = pickEyes();
+    console.log("KIT EYES:");
+    if (kitEyes){
+        kitEyes.forEach(trait => {
+            if (trait){
+                console.log(trait.name);
+            }
+        });
+    }
 
 }
 
