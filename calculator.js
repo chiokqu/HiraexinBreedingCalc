@@ -40,7 +40,8 @@ function getAllTraits(){
             // insert mapped array into trait selects
             $(document).ready(function() {
                 $('.traits').select2({
-                    data:mappedTraitArr
+                    data:mappedTraitArr,
+                    theme:'bootstrap-5'
                 });
             });
         }
