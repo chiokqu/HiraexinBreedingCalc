@@ -1,18 +1,35 @@
+/**************************
+ * INITIALISATION
+***************************/
+
 let submit_btn = document.querySelector("input[type='submit']");
-let traitArr;
-let mappedTraitArr = [];
+let traitArr; // array of traits from traits.csv
+let mappedTraitArr = []; // trait array in select2 format
 
 /**
  * Get traits from traits.csv
  */
 function getAllTraits(){
+    /** CSV LENGTH: 185
+     * traitArr
+        * name: ""
+        * rarity: ""
+        * category: ""
+        * subspecies: ""
+        * variant: "" (USUALLY UNDEFINED)
+        * parent variables: traits1 and traits2 id value = index
+     * mappedTraitArr for use by select2
+        * id: (index)
+        * text: name + rarity + category + subspecies + variant
+        * (text delimiter: ", " <- WITH SPACE)
+     */
     Papa.parse("traits.csv", {
         header:true,
         download:true,
         complete:function(results, file){
             console.log("parsing complete", results.data);
             traitArr = results.data;
-
+            // map result to mapped array (select2 format)
             i = 0
             traitArr.forEach(element => {
                 stringName = element.name + ", " + element.rarity + ", " + element.category + ", " + element.subspecies + ", " + element.variant;
@@ -20,6 +37,7 @@ function getAllTraits(){
                 i++
             });
             //console.log(mappedTraitArr);
+            // insert mapped array into trait selects
             $(document).ready(function() {
                 $('.traits').select2({
                     data:mappedTraitArr
@@ -39,7 +57,6 @@ getAllTraits();
     - [rare][legendary] = check rare against legendary (<=85 means rare)
     - ...etc
 */
-
 let rarityTable = {
     common:{
         common:50,
@@ -67,6 +84,9 @@ let rarityTable = {
     }
 };
 
+/**************************
+ * PARENT VARIABLES
+***************************/
 
 let special1; // only parent 1 can be special
 let subspeciesA1;
@@ -125,13 +145,17 @@ function getData(e){
     });
     console.log(traits2);
 
-    //output
+    //output TEMP
     text += "<strong>Parent 1</strong><br>Is Special NPC: "+ special1 + "<br>Subspecies: " + subspeciesA1 + ", " + subspeciesB1+ "<br>Variant: " + variant1 + "<br>Traits: " + traits1 + "<br><strong>Parent 2</strong><br>" + "Subspecies: " + subspeciesA2 + ", " + subspeciesB2+ "<br>Variant: " + variant2 + "<br>Traits: " + traits2;
     document.querySelector("#formOutput").innerHTML = text;
 
     // start breeding!
     calcBreeding();
 }
+
+/**************************
+ * BREEDING HELPER FUNCTIONS
+***************************/
 
 /**
  * roll a random number between 1 and 100 (inclusive)
@@ -144,7 +168,7 @@ function randomNum100(){
 /**
  * return the rarity of a given subspecies as string
  * @param {string} subspecies 
- * @returns string
+ * @returns string of rarity
  */
 function subspeciesRarityStr(subspecies){
     common =    "fire water nature";
@@ -172,7 +196,7 @@ function subspeciesRarityStr(subspecies){
  * pick a subspecies based on the rarity table
  * @param {string} sub1
  * @param {string} sub2 
- * @returns string
+ * @returns string of chosen subspecies
  */
 function pickSubspecies(sub1, sub2){
     console.log("**picking subspecies***");
@@ -204,11 +228,11 @@ function pickSubspecies(sub1, sub2){
     return picked;
 }
 
-
 /**
  * decide the rarity of a hybrid by selecting the highest rarity
  * @param {string} sub1 
  * @param {string} sub2 
+ * @returns string of highest rarity
  */
 function hybridRarity(sub1, sub2){
     console.log("***picking highest rarity between "+sub1+" and "+sub2+"***")
@@ -231,7 +255,7 @@ function hybridRarity(sub1, sub2){
 
 /**
  * calculate the number of eggs
- * @returns 
+ * @returns int (1 if special, 1-5 otherwise)
  */
 function eggNum(){
     console.log("******************\nEGG\n******************");
@@ -274,16 +298,22 @@ function eggNum(){
 
 /**
  * calculate the subspecies of a kit based on the parents
- * @returns string
+ * @returns string (either 1 subspecies or 2 delimited by ",")
  */
 function subspeciesCalc(){
+    /** VARIABLES
+     * hybrid1/hybrid2: is parent 1/2 a hybrid - boolean
+     * roll: random number (1-100) - int
+     * isHybrid: is child a hybrid - boolean
+     * subspeciesResult: string of 1 subspecies or 2 delimited by "," NO SPACE!
+     */
     var hybrid1 = !(!subspeciesB1 || subspeciesB1.length===0);
     var hybrid2 = !(!subspeciesB2 || subspeciesB2.length===0);
     var roll = randomNum100();
     var isHybrid;
     var subspeciesResult = "";
 
-    // rates
+    // rates of achieving hybrid
     const NO_HYBRID = 1;
     const ONE_HYBRID = 10;
     const TWO_HYBRID = 25;
@@ -299,7 +329,7 @@ function subspeciesCalc(){
         if (roll <= NO_HYBRID){
             isHybrid = true;
             // hybrid of parents
-            subspeciesResult = subspeciesA1 + ", " + subspeciesA2;
+            subspeciesResult = subspeciesA1 + "," + subspeciesA2;
 
             // if subspecies are same, set to the one!
             if (subspeciesA1 === subspeciesA2){
@@ -326,7 +356,7 @@ function subspeciesCalc(){
             if ((subspeciesA1===subspeciesA2 && subspeciesB1===subspeciesB2)||
                 (subspeciesA1===subspeciesB2 && subspeciesA2===subspeciesB1)){
                     console.log("same hybrid parent - copy");
-                    subspeciesResult = subspeciesA1 + ", " + subspeciesB1;
+                    subspeciesResult = subspeciesA1 + "," + subspeciesB1;
                     console.log("subspeciesResult: " + subspeciesResult);
                 }
 
@@ -349,7 +379,7 @@ function subspeciesCalc(){
                             commonSub = subspeciesA2;
                             pickSub = pickSubspecies(subspeciesA1, subspeciesB2);
                         }
-                        subspeciesResult = commonSub + ", " + pickSub;
+                        subspeciesResult = commonSub + "," + pickSub;
                         console.log("subspeciesResult: " + subspeciesResult);
                 }
 
@@ -372,13 +402,12 @@ function subspeciesCalc(){
 
                     // pick subspecies based on roll
                     if (rarityRoll <= rarityRate){
-                        subspeciesResult = subspeciesA1 + ", " + subspeciesB1;
+                        subspeciesResult = subspeciesA1 + "," + subspeciesB1;
                     }
                     else{
-                        subspeciesResult = subspeciesA2 + ", " + subspeciesB2;
+                        subspeciesResult = subspeciesA2 + "," + subspeciesB2;
                     }
                     console.log("subspeciesResult: " + subspeciesResult);
-
                 }
                 else{
                     console.log("pick subspecies from both parents")
@@ -413,10 +442,10 @@ function subspeciesCalc(){
                 console.log("subspecies is hybrid parent");
                 // select hybrid parent
                 if (hybrid1){
-                    subspeciesResult = subspeciesA1 + ", " + subspeciesB1;
+                    subspeciesResult = subspeciesA1 + "," + subspeciesB1;
                 }
                 else{
-                    subspeciesResult = subspeciesA2 + ", " + subspeciesB2;
+                    subspeciesResult = subspeciesA2 + "," + subspeciesB2;
                 }
                 console.log("subspeciesResult: " + subspeciesResult);
             }
@@ -426,21 +455,21 @@ function subspeciesCalc(){
                 if (hybrid1){
                     if (subspeciesA1===subspeciesA2 || subspeciesB1 === subspeciesA2){
                         console.log("parents share subspecies - copy hybrid parent");
-                        subspeciesResult = subspeciesA1 + ", " + subspeciesB1;
+                        subspeciesResult = subspeciesA1 + "," + subspeciesB1;
                     }
                     else{
                         console.log("pick subspecies from both parents")
-                        subspeciesResult =  pickSubspecies(subspeciesA1, subspeciesB1) + ", " + subspeciesA2;
+                        subspeciesResult =  pickSubspecies(subspeciesA1, subspeciesB1) + "," + subspeciesA2;
                     }
                 }
                 else{
                     if (subspeciesA2===subspeciesA1 || subspeciesB2 === subspeciesA1){
                         console.log("parents share subspecies - copy hybrid parent");
-                        subspeciesResult = subspeciesA2 + ", " + subspeciesB2;
+                        subspeciesResult = subspeciesA2 + "," + subspeciesB2;
                     }
                     else{
                         console.log("pick subspecies from both parents")
-                        subspeciesResult =  pickSubspecies(subspeciesA2, subspeciesB2) + ", " + subspeciesA1;
+                        subspeciesResult =  pickSubspecies(subspeciesA2, subspeciesB2) + "," + subspeciesA1;
                     }
                 }
                 console.log("subspeciesResult: " + subspeciesResult);
@@ -465,11 +494,12 @@ function subspeciesCalc(){
         }
         console.log("kit hybrid?: "+ isHybrid);
     }
-
     return subspeciesResult;
 }
 
-
+/**************************
+ * BREEDING CALCULATION
+***************************/
 
 function calcBreeding(){
     var eggs = eggNum();
