@@ -16,7 +16,7 @@
 <body>
     <main class="container p-3">
         <h1>Hiraexin Breeding Calculator</h1>
-        <form action="" name="parentsform" id="parentsform">
+        <form action="" name="parentsform" id="parentsform" class="my-2">
             <div class="row row-cols-2 g-2">
                     <div class="col col-12 col-md-6">
                         <fieldset class="card p-2 h-100 d-flex align-items-start flex-column">
@@ -131,7 +131,7 @@
                 <input type="submit" value="Calculate" class="btn btn-primary">
             </div>
         <hr>
-        <section class="card p-2">
+        <section class="card p-2 my-2">
             <h2>Result</h2>
             <p>Parent data:<br>
                 <span id="formOutput"></span>
@@ -139,6 +139,17 @@
             <p>Eggs: <span id="eggNum"></span></p>
             <h3>Kits</h3>
             <p id="kit1">kit1</p>
+        </section>
+        <section class="card p-2 my-2">
+            <h2>Log</h2>
+            <button class="btn btn-secondary my-1 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#logCollapse" aria-expanded="false" aria-controls="logCollapse">
+                Show/Hide Log
+            </button>
+            <div class="collapse" id="logCollapse">
+                <div class="card card-body" id="logWrite">
+                    No logs! TBA
+                </div>
+            </div>
         </section>
     </main>
     

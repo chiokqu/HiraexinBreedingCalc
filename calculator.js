@@ -701,7 +701,32 @@ function pickTrait(trait1, trait2){
 }
 
 /**
- * pick eye traits based on parent
+ * roll an individual trait if it passes
+ * @param {object} trait 
+ */
+function rollTrait(trait){
+    console.log("***rolling trait: "+trait.name+"***");
+    var roll = randomNum100();
+    var rate;
+    var pass;
+    console.log("indexing at: " + trait.rarity + " v NONE (common)");
+    rate = rarityTable[trait.rarity]["common"];
+    console.log("rate: " + rate + ", roll: " + roll);
+
+    if (roll <= rate){
+        console.log("passes: " + trait.name);
+        pass = true;
+    }
+    else{
+        console.log("doesn't pass: " + trait.name);
+        pass = false;
+    }
+    return pass;
+}
+
+/**
+ * pick eye traits based on parents
+ * @returns array of pupil [0] and heterochromia [1] traits
  */
 function pickEyes(){
     var standard = "common uncommon rare legendary"
@@ -744,19 +769,29 @@ function pickEyes(){
         console.log("neither exists");
         pickPupil = undefined;
     }
-    // if traits are the same
-    else if (p1pupil.name===p2pupil.name){
-        console.log("same trait");
-        pickPupil = p1pupil;
-    }
     // if p1 trait doesn't exist
     else if (!p1pupil){
         console.log("no p1 trait");
-        pickPupil = p2pupil;
+        if (rollTrait(p2pupil)){
+            pickPupil = p2pupil;
+        }
+        else{
+            pickPupil = undefined;
+        }
     }
     // if p2 trait doesn't exist
     else if (!p2pupil){
         console.log("no p2 trait");
+        if (rollTrait(p1pupil)){
+            pickPupil = p1pupil;
+        }
+        else{
+            pickPupil = undefined;
+        }
+    }
+    // if traits are the same
+    else if (p1pupil.name===p2pupil.name){
+        console.log("same trait");
         pickPupil = p1pupil;
     }
     else{
@@ -770,19 +805,29 @@ function pickEyes(){
         console.log("neither exists");
         pickHet = undefined;
     }
-    // if traits are the same
-    else if (p1het.name===p2het.name){
-        console.log("same trait");
-        pickHet = p1het;
-    }
     // if p1 trait doesn't exist
     else if (!p1het){
         console.log("no p1 trait");
-        pickHet = p2het;
+        if (rollTrait(p2het)){
+            pickHet = p2het;
+        }
+        else{
+            pickHet = undefined;
+        }
     }
     // if p2 trait doesn't exist
     else if (!p2het){
         console.log("no p2 trait");
+        if (rollTrait(p1het)){
+            pickHet = p1het;
+        }
+        else{
+            pickHet = undefined;
+        }
+    }
+    // if traits are the same
+    else if (p1het.name===p2het.name){
+        console.log("same trait");
         pickHet = p1het;
     }
     else{
@@ -791,6 +836,140 @@ function pickEyes(){
     }
     console.log("result: " + pickPupil + ", " + pickHet);
     return [pickPupil, pickHet];
+}
+
+/**
+ * pick ribbon trait based on parents
+ * @returns ribbon trait
+ */
+function pickRibbons(){
+    var standard = "common uncommon rare legendary"
+    var p1rib;
+    var p2rib;
+    var pickRib;
+    // find standard ribbon traits for p1
+    traits1.forEach(trait => {
+        if (standard.includes(traitArr[trait.id].rarity)){
+            // is ribbon trait?
+            if (traitArr[trait.id].category==="ribbons"){
+                p1rib = traitArr[trait.id];
+            }
+        }
+    });
+    // find standard ribbon traits for p2
+    traits2.forEach(trait => {
+        if (standard.includes(traitArr[trait.id].rarity)){
+            // is ribbon trait?
+            if (traitArr[trait.id].category==="ribbons"){
+                p2rib = traitArr[trait.id];
+            }
+        }
+    });
+    // compare ribbons
+    console.log("***compare ribbon:***");
+    //if neither trait exists
+    if (!p1rib && !p2rib){
+        console.log("neither exists");
+        pickRib = undefined;
+    }
+    // if p1 trait doesn't exist
+    else if (!p1rib){
+        console.log("no p1 trait");
+        if (rollTrait(p2rib)){
+            pickRib = p2rib;
+        }
+        else{
+            pickRib = undefined;
+        }
+    }
+    // if p2 trait doesn't exist
+    else if (!p2rib){
+        console.log("no p2 trait");
+        if (rollTrait(p1rib)){
+            pickRib = p1rib;
+        }
+        else{
+            pickRib = undefined;
+        }
+    }
+    // if traits are the same
+    else if (p1rib.name===p2rib.name){
+        console.log("same trait");
+        pickRib = p1rib;
+    }
+    else{
+        // otherwise pick based on table
+        pickRib = pickTrait(p1rib, p2rib);
+    }
+    console.log("result: " + pickRib);
+    return pickRib;
+}
+
+/**
+ * pick horn trait based on parents
+ * @returns horn trait
+ */
+function pickHorns(){
+    var standard = "common uncommon rare legendary"
+    var p1horn;
+    var p2horn;
+    var pickHorn;
+    // find standard horn traits for p1
+    traits1.forEach(trait => {
+        if (standard.includes(traitArr[trait.id].rarity)){
+            // is horn trait?
+            if (traitArr[trait.id].category==="horns"){
+                p1horn = traitArr[trait.id];
+            }
+        }
+    });
+    // find standard horn traits for p2
+    traits2.forEach(trait => {
+        if (standard.includes(traitArr[trait.id].rarity)){
+            // is horn trait?
+            if (traitArr[trait.id].category==="horns"){
+                p2horn = traitArr[trait.id];
+            }
+        }
+    });
+    // compare horns
+    console.log("***compare horns:***");
+    //if neither trait exists
+    if (!p1horn && !p2horn){
+        console.log("neither exists");
+        pickHorn = undefined;
+    }
+    // if traits are the same
+    else if (p1horn.name===p2horn.name){
+        console.log("same trait");
+        pickHorn = p1horn;
+    }
+    // if p1 trait doesn't exist
+    else if (!p1horn){
+        console.log("no p1 trait");
+        if (rollTrait(p2horn)){
+            pickHorn = p2horn;
+        }
+        else{
+            pickHorn = undefined;
+        }
+    }
+    // if p2 trait doesn't exist
+    else if (!p2horn){
+        console.log("no p2 trait");
+        if (rollTrait(p1horn)){
+            pickHorn = p1horn;
+        }
+        else{
+            pickHorn = undefined;
+        }
+    }
+    else{
+        // otherwise pick based on table
+        pickHorn = pickTrait(p1horn, p2horn);
+    }
+    console.log("result: " + pickHorn);
+    return pickHorn;
 }
 
 /**************************
@@ -814,7 +993,17 @@ function calcBreeding(){
             }
         });
     }
+    kitRibbons = pickRibbons();
+    console.log("KIT RIBBONS: ");
+    if (kitRibbons){
+        console.log(kitRibbons.name);
+    }
 
+    kitHorns = pickHorns();
+    console.log("KIT HORNS: ");
+    if (kitHorns){
+        console.log(kitHorns.name);
+    }
 }
 
 submit_btn.addEventListener("click", getData);
